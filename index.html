@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildan Soleh | Penulis & Perangkai Kata</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* TEMA DEFAULT: MODE GELAP */
+        :root {
+            --mojok-red: #c30000;
+            --bg-paper: #121212;
+            --text-dark: #fdfdf5;
+            --card-bg: #1e1e1e;
+            --border-color: #fdfdf5;
+            --shadow-color: #000000;
+            --secondary-text: #bbb;
+        }
+
+        /* TEMA TAMBAHAN: MODE TERANG */
+        body.light-mode {
+            --bg-paper: #fdfdf5; 
+            --text-dark: #1a1a1a;
+            --card-bg: #ffffff;
+            --border-color: #1a1a1a;
+            --shadow-color: #1a1a1a;
+            --secondary-text: #555;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg-paper); 
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            color: var(--text-dark); 
+            font-family: 'Inter', sans-serif; 
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container { width: 95%; max-width: 1000px; margin: auto; padding: 0 20px; }
+
+        #progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 5px; z-index: 1100; }
+        #progress-bar { height: 100%; background: var(--mojok-red); width: 0%; }
+
+        .mojok-header {
+            background: var(--card-bg); border-bottom: 4px solid var(--border-color);
+            padding: 20px 0; position: sticky; top: 0; z-index: 1000;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 900; cursor: pointer; }
+        .logo span { color: var(--mojok-red); }
+
+        #theme-btn {
+            background: var(--text-dark); color: var(--bg-paper);
+            border: 2px solid var(--border-color); padding: 8px 15px;
+            font-weight: 900; cursor: pointer; font-size: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .profile-hero { 
+            background: var(--card-bg); border: 4px solid var(--border-color); margin-top: 50px; 
+            padding: 50px; box-shadow: 10px 10px 0px var(--shadow-color); display: flex; gap: 40px; align-items: center;
+        }
+        
+        .profile-photo {
+            flex-shrink: 0; width: 280px; height: 320px; border: 4px solid var(--border-color);
+            background-color: #ccc; filter: grayscale(100%);
+            background-image: url('https://i.ibb.co.com/1JZyd3Bp/IMG-20260404-WA0022.jpg'); 
+            background-size: cover; background-position: center;
+            box-shadow: 5px 5px 0px var(--mojok-red);
+        }
+
+        .profile-text h1 { font-family: 'Lora', serif; font-size: 3rem; line-height: 1.1; margin-bottom: 15px; }
+
+        .social-hero-links { margin-top: 25px; display: flex; gap: 20px; }
+        .social-hero-links a { 
+            text-decoration: none; font-size: 0.8rem; font-weight: 900;
+            font-family: 'Montserrat', sans-serif; color: var(--text-dark);
+            display: flex; align-items: center; gap: 10px;
+            padding: 6px 15px; border: 2px solid var(--border-color);
+            background: var(--card-bg); transition: 0.2s;
+            box-shadow: 4px 4px 0px var(--shadow-color);
+        }
+        .social-hero-links a:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px var(--mojok-red); }
+        .social-hero-links img { width: 18px; height: 18px; object-fit: contain; }
+
+        .section-label { font-family: 'Montserrat', sans-serif; background: var(--text-dark); color: var(--bg-paper); padding: 6px 20px; display: inline-block; margin: 60px 0 25px 0; transform: rotate(-1deg); }
+        .cat-nav { display: flex; gap: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 40px; overflow-x: auto; }
+        .cat-btn { background: none; border: none; font-family: inherit; cursor: pointer; font-weight: 900; font-size: 0.9rem; color: var(--secondary-text); white-space: nowrap; }
+        .cat-btn.active { color: var(--mojok-red); border-bottom: 3px solid var(--mojok-red); }
+
+        .article-card { margin-bottom: 60px; cursor: pointer; }
+        .article-card h2 { font-family: 'Lora', serif; font-size: 2.2rem; margin: 8px 0; transition: 0.2s; line-height: 1.2; }
+        .article-card h2:hover { color: var(--mojok-red); text-decoration: underline wavy; }
+        .type-label { font-weight: 900; color: var(--mojok-red); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+        #reading-page { display: none; margin-top: 50px; background: var(--card-bg); border: 4px solid var(--border-color); padding: 60px; box-shadow: 10px 10px 0px var(--shadow-color); margin-bottom: 50px; }
+        .back-btn { background: none; border: 2px solid var(--border-color); padding: 8px 18px; font-weight: 900; cursor: pointer; margin-bottom: 40px; color: var(--text-dark); font-family: 'Montserrat', sans-serif; }
+        .text-body { font-size: 1.3rem; line-height: 2.2; font-family: 'Lora', serif; }
+
+        .read-meta { display: flex; flex-direction: column; margin-bottom: 20px; gap: 5px; }
+        .reading-time { font-size: 0.75rem; font-weight: 900; color: var(--secondary-text); text-transform: uppercase; letter-spacing: 1px; }
+        
+        #reading-page:not(.is-puisi) .text-body p:first-of-type::first-letter {
+            float: left; font-family: 'Montserrat', sans-serif; font-size: 4.5rem;
+            line-height: 1; padding-right: 12px; color: var(--mojok-red); font-weight: 900;
+        }
+        #reading-page.is-puisi .text-body { text-align: center; font-style: italic; }
+        
+        .share-section { margin-top: 50px; padding-top: 20px; border-top: 1px dashed var(--border-color); }
+        .share-btn { display: inline-block; background: #25D366; color: white; padding: 10px 20px; text-decoration: none; font-weight: 900; font-size: 0.85rem; border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--shadow-color); display: flex; align-items: center; gap: 10px; width: fit-content; }
+        .mini-bio { margin-top: 40px; background: rgba(255,255,255,0.05); padding: 25px; border-left: 6px solid var(--mojok-red); font-size: 1rem; color: var(--secondary-text); font-style: italic; }
+        body.light-mode .mini-bio { background: rgba(0,0,0,0.05); }
+
+        footer { border-top: 4px solid var(--border-color); margin-top: 100px; padding: 60px 0; text-align: center; background: var(--card-bg); }
+
+        @media (max-width: 850px) {
+            .profile-hero { flex-direction: column; text-align: center; padding: 30px; }
+            .profile-photo { width: 100%; height: 320px; }
+            .profile-text h1 { font-size: 2.2rem; }
+            .social-hero-links { justify-content: center; flex-wrap: wrap; }
+            #reading-page { padding: 30px 20px; }
+            .text-body { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
+    <header class="mojok-header">
+        <div class="container header-content">
+            <div class="logo" onclick="goHome()">WILDAN<span>SOLEH</span></div>
+            <button id="theme-btn">MODE TERANG</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="home-view">
+            <section class="profile-hero">
+                <div class="profile-photo"></div>
+                <div class="profile-text">
+                    <span class="type-label">Peracau yang suka menulis</span>
+                    <h1>Mengabadikan Dunia <br> Lewat <span>Kata-kata</span>.</h1>
+                    <p>"Menulis adalah cara saya bernapas di tengah hiruk-pikuk dunia, sekaligus menjaga kewarasan jiwa. Mencari sunyi, menemukan diri dalam tiap bait sajak dan puisi."</p>
+                    
+                    <div class="social-hero-links">
+                        <a href="https://www.instagram.com/nakeciara" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="IG"> INSTAGRAM
+                        </a>
+                        <a href="https://wa.me/6281234567890" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA"> WHATSAPP
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-label">ISI KEPALA</div>
+            <nav class="cat-nav">
+                <button class="cat-btn active" onclick="filterCategory('semua')">SEMUA</button>
+                <button class="cat-btn" onclick="filterCategory('cerpen')">CERPEN</button>
+                <button class="cat-btn" onclick="filterCategory('puisi')">PUISI</button>
+                <button class="cat-btn" onclick="filterCategory('sajak')">SAJAK</button>
+                <button class="cat-btn" onclick="filterCategory('essay')">ESSAY</button>
+            </nav>
+
+            <div id="feed-container">
+                <p style="text-align: center; padding: 50px;">Menarik data dari memori...</p>
+            </div>
+        </div>
+
+        <section id="reading-page">
+            <button class="back-btn" onclick="goHome()">← PULANG KE BERANDA</button>
+            <div class="full-content">
+                <div id="read-header"></div>
+                <div id="read-body" class="text-body"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p style="font-weight:900; letter-spacing: 2px;">WILDAN SOLEH — © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // MASUKKAN ID SPREADSHEET KAMU DI SINI
+        const SPREADSHEET_ID = '1SAL3NNtUMbDzMMyumOi2jGr_3_AzKmfzERHhTorGWnc';
+        const URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
+
+        const themeBtn = document.getElementById('theme-btn');
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('light-mode');
+            themeBtn.innerText = document.body.classList.contains('light-mode') ? "MODE GELAP" : "MODE TERANG";
+        };
+
+        async function loadContent() {
+            try {
+                const res = await fetch(URL);
+                const text = await res.text();
+                // Mengambil data JSON dari Google Sheets
+                const json = JSON.parse(text.substr(47).slice(0, -2));
+                const rows = json.table.rows;
+                const container = document.getElementById('feed-container');
+                container.innerHTML = '';
+
+                rows.forEach((row, index) => {
+                    // Loncat baris pertama kalau itu header
+                    if (index === 0) return;
+
+                    // Cek apakah data kolom ada isinya
+                    const data = {
+                        judul: row.c[0] ? row.c[0].v : '',
+                        kategori: row.c[1] ? row.c[1].v : 'Umum',
+                        ringkasan: row.c[2] ? row.c[2].v : '',
+                        isi: row.c[3] ? row.c[3].v : ''
+                    };
+
+                    // Jangan proses jika judul kosong
+                    if (!data.judul) return;
+
+                    const article = document.createElement('article');
+                    article.className = 'article-card';
+                    const kategoriClean = data.kategori.toString().toLowerCase();
+                    article.setAttribute('data-category', kategoriClean);
+                    article.onclick = () => displayArticle(data);
+                    
+                    article.innerHTML = `
+                        <span class="type-label">${data.kategori}</span>
+                        <h2>${data.judul}</h2>
+                        <p>${data.ringkasan}</p>
+                    `;
+                    container.appendChild(article);
+                });
+
+                if (container.innerHTML === '') {
+                    container.innerHTML = "<p style='text-align:center; padding:50px;'>Belum ada tulisan di Google Sheets.</p>";
+                }
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('feed-container').innerHTML = "Gagal memuat tulisan. Pastikan ID Spreadsheet benar dan sudah 'Publish to Web'.";
+            }
+        }
+
+        function displayArticle(data) {
+            const page = document.getElementById('reading-page');
+            const isPuisi = data.kategori.toLowerCase() === 'puisi';
+            
+            if(isPuisi) page.classList.add('is-puisi');
+            else page.classList.remove('is-puisi');
+
+            const words = data.isi ? data.isi.split(' ').length : 0;
+            const time = Math.ceil(words / 200);
+
+            document.getElementById('read-header').innerHTML = `
+                <div class="read-meta">
+                    <span class="reading-time">☕ ${time} Menit Baca</span>
+                    <span class="type-label">${data.kategori}</span>
+                </div>
+                <h1 style="font-family:'Lora',serif; font-size:3.2rem; margin-bottom:20px; line-height:1.2;">${data.judul}</h1>
+            `;
+            
+            document.getElementById('read-body').innerHTML = `
+                <div class="main-text">${data.isi ? data.isi.replace(/\n/g, '<br>') : ''}</div>
+                <div class="share-section">
+                    <p style="font-weight:900; margin-bottom:15px;">SUKA TULISAN INI?</p>
+                    <a href="https://api.whatsapp.com/send?text=Baca tulisan Wildan Soleh: ${data.judul}" target="_blank" class="share-btn">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" style="width:20px;"> BAGIKAN KE WHATSAPP
+                    </a>
+                </div>
+                <div class="mini-bio">
+                    <strong>Tentang Penulis:</strong> Wildan Soleh adalah penjelajah kata yang menetap di antara logika dan rasa. Ia percaya bahwa setiap ingatan layak punya rumah dalam bentuk tulisan.
+                </div>`;
+            
+            document.getElementById('home-view').style.display = 'none';
+            page.style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function goHome() {
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('reading-page').style.display = 'none';
+            window.scrollTo(0,0);
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.toggle('active', b.innerText.toLowerCase() === cat);
+            });
+            document.querySelectorAll('.article-card').forEach(a => {
+                const itemCat = a.getAttribute('data-category');
+                a.style.display = (cat === 'semua' || itemCat === cat) ? 'block' : 'none';
+            });
+        }
+
+        window.onscroll = () => {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        loadContent();
+    </script>
+</body>
+</html>
