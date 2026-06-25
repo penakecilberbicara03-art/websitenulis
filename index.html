@@ -142,7 +142,7 @@
                 <div class="profile-photo"></div>
                 <div class="profile-text">
                     <span class="type-label">Peracau yang suka menulis</span>
-                    <h1>Mengabadikan Dunia <br> Lewat <span>Kata-kata</span>.</h1>
+                    <h1>Mengabadikan Dunia Lewat Kata-Kata <br> Lewat <span>Kata-kata</span>.</h1>
                     <p>"Menulis adalah cara saya bernapas di tengah hiruk-pikuk dunia, sekaligus menjaga kewarasan jiwa. Mencari sunyi, menemukan diri dalam tiap bait sajak dan puisi."</p>
                     
                     <div class="social-hero-links">
@@ -211,12 +211,12 @@
                     if (index === 0) return;
 
                     // Cek apakah data kolom ada isinya
-                    const data = {
+const data = {
     judul: row.c[0] ? row.c[0].v : '',
     kategori: row.c[1] ? row.c[1].v : 'Umum',
     ringkasan: row.c[2] ? row.c[2].v : '',
     isi: row.c[3] ? row.c[3].v : '',
-    gambar: row.c[5] ? row.c[5].v : '' 
+    gambar: row.c[4] ? row.c[4].v : '' // 
 };
                     // Jangan proses jika judul kosong
                     if (!data.judul) return;
