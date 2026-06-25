@@ -212,12 +212,12 @@
 
                     // Cek apakah data kolom ada isinya
                     const data = {
-                        judul: row.c[0] ? row.c[0].v : '',
-                        kategori: row.c[1] ? row.c[1].v : 'Umum',
-                        ringkasan: row.c[2] ? row.c[2].v : '',
-                        isi: row.c[3] ? row.c[3].v : ''
-                    };
-
+    judul: row.c[0] ? row.c[0].v : '',
+    kategori: row.c[1] ? row.c[1].v : 'Umum',
+    ringkasan: row.c[2] ? row.c[2].v : '',
+    isi: row.c[3] ? row.c[3].v : '',
+    gambar: row.c[5] ? row.c[5].v : '' 
+};
                     // Jangan proses jika judul kosong
                     if (!data.judul) return;
 
@@ -246,39 +246,44 @@
         }
 
         function displayArticle(data) {
-            const page = document.getElementById('reading-page');
-            const isPuisi = data.kategori.toLowerCase() === 'puisi';
-            
-            if(isPuisi) page.classList.add('is-puisi');
-            else page.classList.remove('is-puisi');
+    const page = document.getElementById('reading-page');
+    const isPuisi = data.kategori.toLowerCase() === 'puisi';
+    
+    if(isPuisi) page.classList.add('is-puisi');
+    else page.classList.remove('is-puisi');
 
-            const words = data.isi ? data.isi.split(' ').length : 0;
-            const time = Math.ceil(words / 200);
+    // Variabel untuk gambar
+    const gambarHtml = data.gambar ? `<img src="${data.gambar}" style="width:100%; border:4px solid var(--border-color); margin-bottom:20px;">` : "";
 
-            document.getElementById('read-header').innerHTML = `
-                <div class="read-meta">
-                    <span class="reading-time">☕ ${time} Menit Baca</span>
-                    <span class="type-label">${data.kategori}</span>
-                </div>
-                <h1 style="font-family:'Lora',serif; font-size:3.2rem; margin-bottom:20px; line-height:1.2;">${data.judul}</h1>
-            `;
-            
-            document.getElementById('read-body').innerHTML = `
-                <div class="main-text">${data.isi ? data.isi.replace(/\n/g, '<br>') : ''}</div>
-                <div class="share-section">
-                    <p style="font-weight:900; margin-bottom:15px;">SUKA TULISAN INI?</p>
-                    <a href="https://api.whatsapp.com/send?text=Baca tulisan Wildan Soleh: ${data.judul}" target="_blank" class="share-btn">
-                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" style="width:20px;"> BAGIKAN KE WHATSAPP
-                    </a>
-                </div>
-                <div class="mini-bio">
-                    <strong>Tentang Penulis:</strong> Wildan Soleh lahir di Banyumas pada 26 Juli. Selain sibuk menulis ia juga seorang Mahasiwa Sistem Informasi di Universitas Komputama Cilacap.
-                </div>`;
-            
-            document.getElementById('home-view').style.display = 'none';
-            page.style.display = 'block';
-            window.scrollTo(0,0);
-        }
+    const words = data.isi ? data.isi.split(' ').length : 0;
+    const time = Math.ceil(words / 200);
+
+    document.getElementById('read-header').innerHTML = `
+        ${gambarHtml}
+        <div class="read-meta">
+            <span class="reading-time">☕ ${time} Menit Baca</span>
+            <span class="type-label">${data.kategori}</span>
+        </div>
+        <h1 style="font-family:'Lora',serif; font-size:3.2rem; margin-bottom:20px; line-height:1.2;">${data.judul}</h1>
+    `;
+    
+    // ... (sisanya biarkan sama seperti kode aslimu)
+    document.getElementById('read-body').innerHTML = `
+        <div class="main-text">${data.isi ? data.isi.replace(/\n/g, '<br>') : ''}</div>
+        <div class="share-section">
+            <p style="font-weight:900; margin-bottom:15px;">SUKA TULISAN INI?</p>
+            <a href="https://api.whatsapp.com/send?text=Baca tulisan Wildan Soleh: ${data.judul}" target="_blank" class="share-btn">
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" style="width:20px;"> BAGIKAN KE WHATSAPP
+            </a>
+        </div>
+        <div class="mini-bio">
+            <strong>Tentang Penulis:</strong> Wildan Soleh lahir di Banyumas pada 26 Juli. Selain sibuk menulis ia juga seorang Mahasiwa Sistem Informasi di Universitas Komputama Cilacap.
+        </div>`;
+    
+    document.getElementById('home-view').style.display = 'none';
+    page.style.display = 'block';
+    window.scrollTo(0,0);
+}
 
         function goHome() {
             document.getElementById('home-view').style.display = 'block';
