@@ -207,33 +207,34 @@
                 container.innerHTML = '';
 
                 rows.forEach((row, index) => {
-                    // Loncat baris pertama kalau itu header
-                    if (index === 0) return;
+    if (index === 0) return;
 
-                    // Cek apakah data kolom ada isinya
-const data = {
-    judul: row.c[0] ? row.c[0].v : '',
-    kategori: row.c[1] ? row.c[1].v : 'Umum',
-    ringkasan: row.c[2] ? row.c[2].v : '',
-    isi: row.c[3] ? row.c[3].v : '',
-    gambar: row.c[4] ? row.c[4].v : '' // 
-};
-                    // Jangan proses jika judul kosong
-                    if (!data.judul) return;
+    const data = {
+        judul: row.c[0] ? row.c[0].v : '',
+        kategori: row.c[1] ? row.c[1].v : 'Umum',
+        ringkasan: row.c[2] ? row.c[2].v : '',
+        isi: row.c[3] ? row.c[3].v : '',
+        gambar: row.c[4] ? row.c[4].v : ''
+    };
 
-                    const article = document.createElement('article');
-                    article.className = 'article-card';
-                    const kategoriClean = data.kategori.toString().toLowerCase();
-                    article.setAttribute('data-category', kategoriClean);
-                    article.onclick = () => displayArticle(data);
-                    
-                    article.innerHTML = `
-                        <span class="type-label">${data.kategori}</span>
-                        <h2>${data.judul}</h2>
-                        <p>${data.ringkasan}</p>
-                    `;
-                    container.appendChild(article);
-                });
+    if (!data.judul) return;
+
+    const article = document.createElement('article');
+    article.className = 'article-card';
+    article.setAttribute('data-category', data.kategori.toString().toLowerCase());
+    article.onclick = () => displayArticle(data);
+    
+    // Tambahkan baris ini untuk menampilkan gambar di beranda
+    const gambarBeranda = data.gambar ? `<img src="${data.gambar}" style="width:100%; height:200px; object-fit:cover; margin-bottom:10px; border: 2px solid var(--border-color);">` : "";
+
+    article.innerHTML = `
+        ${gambarBeranda}
+        <span class="type-label">${data.kategori}</span>
+        <h2>${data.judul}</h2>
+        <p>${data.ringkasan}</p>
+    `;
+    container.appendChild(article);
+});
 
                 if (container.innerHTML === '') {
                     container.innerHTML = "<p style='text-align:center; padding:50px;'>Belum ada tulisan di Google Sheets.</p>";
