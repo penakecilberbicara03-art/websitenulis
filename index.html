@@ -239,19 +239,7 @@ article.innerHTML = `
         </div>
     </div>
 `;
-container.appendChild(article);
-    
-    // Tambahkan baris ini untuk menampilkan gambar di beranda
-    const gambarBeranda = data.gambar ? `<img src="${data.gambar}" style="width:100%; height:200px; object-fit:cover; margin-bottom:10px; border: 2px solid var(--border-color);">` : "";
 
-    article.innerHTML = `
-        ${gambarBeranda}
-        <span class="type-label">${data.kategori}</span>
-        <h2>${data.judul}</h2>
-        <p>${data.ringkasan}</p>
-    `;
-    container.appendChild(article);
-});
 
                 if (container.innerHTML === '') {
                     container.innerHTML = "<p style='text-align:center; padding:50px;'>Belum ada tulisan di Google Sheets.</p>";
